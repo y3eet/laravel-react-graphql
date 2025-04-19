@@ -36,16 +36,16 @@ const client = new ApolloClient({
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ApolloProvider client={client}>
-      <AuthProvider>
-        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-          <Toaster />
-          <SidebarProvider>
-            <BrowserRouter>
+      <BrowserRouter>
+        <AuthProvider>
+          <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+            <Toaster />
+            <SidebarProvider>
               <App />
-            </BrowserRouter>
-          </SidebarProvider>
-        </ThemeProvider>
-      </AuthProvider>
+            </SidebarProvider>
+          </ThemeProvider>
+        </AuthProvider>
+      </BrowserRouter>
     </ApolloProvider>
   </StrictMode>
 );
