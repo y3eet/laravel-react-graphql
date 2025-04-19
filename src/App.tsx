@@ -6,9 +6,8 @@ import { SidebarInset } from "./components/ui/sidebar";
 import Home from "./components/routes/home";
 import Root from "./components/routes/root";
 import Dashboard from "./components/routes/dashboard";
-import LoginPage from "./components/routes/login";
+import AuthPage from "./components/routes/auth-page";
 import Crud from "./components/routes/crud";
-import RegisterPage from "./components/routes/register";
 import { useEffect, useState } from "react";
 
 function App() {
@@ -36,8 +35,8 @@ function App() {
       <Route element={<BarLayout showSidebar={false} />}>
         <Route index element={<Root />} />
       </Route>
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
+      <Route path="/login" element={<AuthPage />} />
+      <Route path="/register" element={<AuthPage />} />
     </Routes>
   );
 }
