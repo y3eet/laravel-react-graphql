@@ -15,7 +15,12 @@ final readonly class Logout
         $guard = Auth::guard('web');
         $user = $guard->user();
 
-        $guard->logout();
+        if ($user) {
+            $guard->logout();
+            request()->session()->invalidate();
+            request()->session()->regenerateToken();
+        }
+
         return $user;
     }
 }
