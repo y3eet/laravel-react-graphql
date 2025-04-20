@@ -19,7 +19,6 @@ import { NavLink } from "react-router";
 import { Button } from "./ui/button";
 import { ArrowLeftToLine } from "lucide-react";
 import { useAuth } from "./auth-context";
-import DisplayStatus from "./display-status";
 
 export function AppSidebar() {
   const navigation = navigationData;
