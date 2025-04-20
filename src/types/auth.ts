@@ -1,3 +1,4 @@
+import { MutationResult } from "@apollo/client";
 export type User = {
   id: string;
   email: string;
@@ -5,10 +6,15 @@ export type User = {
 };
 
 export type AuthContextType = {
-  user: User | null;
+  currentUser: User | null | undefined;
   isAuthenticated: boolean;
-  isLoading: boolean;
-  login: (email: string, password: string) => Promise<boolean>;
+  loading: boolean;
+  login: (email: string, password: string) => void;
+  register: (name: string, email: string, password: string) => void;
   logout: () => void;
-  register: (name: string, email: string, password: string) => Promise<boolean>;
+  mutationResult: {
+    login: MutationResult;
+    logout: MutationResult;
+    register: MutationResult;
+  };
 };

@@ -18,10 +18,13 @@ import { navigationData } from "@/data/navigation";
 import { NavLink } from "react-router";
 import { Button } from "./ui/button";
 import { ArrowLeftToLine } from "lucide-react";
+import { useAuth } from "./auth-context";
+import DisplayStatus from "./display-status";
 
 export function AppSidebar() {
   const navigation = navigationData;
   const { toggleSidebar } = useSidebar();
+  const { currentUser, logout } = useAuth();
   return (
     <Sidebar>
       <SidebarHeader>
@@ -65,13 +68,16 @@ export function AppSidebar() {
         {/* User Profile */}
         <SidebarMenu>
           <SidebarMenuItem>
-            <NavUser
-              user={{
-                name: "John Doe",
-                role: "Admin",
-                avatar: "/vite.svg",
-              }}
-            />
+            {currentUser && (
+              <NavUser
+                onLogout={() => logout()}
+                user={{
+                  name: currentUser.name,
+                  email: currentUser.email,
+                  avatar: "/",
+                }}
+              />
+            )}
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>

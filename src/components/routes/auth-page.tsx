@@ -81,21 +81,22 @@ export default function AuthPage() {
 }
 
 function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<"form">) {
+  const { login, mutationResult } = useAuth();
+
   const loginSchema = z.object({
     email: z.string().email(),
     password: z.string().min(6, { message: "Password must be atleast 6 characters" }),
   });
+
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
-      password: "",
+      password: "pass12345",
     },
   });
-  function onSubmit(values: z.infer<typeof loginSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  function onSubmit({ email, password }: z.infer<typeof loginSchema>) {
+    login(email, password);
   }
 
   return (
@@ -126,22 +127,23 @@ function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<"form
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="flex justify-between">
-                    Password{" "}
+                    Password
                     <NavLink className="ml-auto text-sm underline-offset-4 hover:underline" to="#">
                       Forgot Password?
                     </NavLink>
                   </FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter your password" {...field} />
+                    <Input type="password" placeholder="Enter your password" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
           </div>
-          <Button type="submit" className="w-full">
+          <Button loading={mutationResult.login.loading} type="submit" className="w-full">
             Login
           </Button>
+          <FormMessage>{mutationResult.login.error?.message}</FormMessage>
         </div>
       </form>
     </Form>
@@ -149,6 +151,7 @@ function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<"form
 }
 
 function RegisterForm({ className, ...props }: React.ComponentPropsWithoutRef<"form">) {
+  const { register, mutationResult } = useAuth();
   const registerSchema = z.object({
     email: z.string().email(),
     name: z.string().max(255, { message: "Name should not exceed 255 characters" }),
@@ -162,10 +165,8 @@ function RegisterForm({ className, ...props }: React.ComponentPropsWithoutRef<"f
       password: "",
     },
   });
-  function onSubmit(values: z.infer<typeof registerSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  function onSubmit({ email, password, name }: z.infer<typeof registerSchema>) {
+    register(name, email, password);
   }
   return (
     <Form {...form}>
@@ -213,14 +214,14 @@ function RegisterForm({ className, ...props }: React.ComponentPropsWithoutRef<"f
                 <FormItem>
                   <FormLabel className="flex justify-between">Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter your password" {...field} />
+                    <Input type="password" placeholder="Enter your password" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
           </div>
-          <Button type="submit" className="w-full">
+          <Button loading={mutationResult.register.loading} type="submit" className="w-full">
             Register
           </Button>
         </div>
