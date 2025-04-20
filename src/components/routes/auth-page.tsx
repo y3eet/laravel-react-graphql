@@ -92,7 +92,7 @@ function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<"form
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
-      password: "pass12345",
+      password: "",
     },
   });
   function onSubmit({ email, password }: z.infer<typeof loginSchema>) {
