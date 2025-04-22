@@ -6,7 +6,7 @@
 
 Before you begin, ensure you have the following tools installed:
 
-- [Laravel](https://laravel.com/docs/12.x/installation#creating-a-laravel-project)
+- [Laravel](https://github.com/y3eet/laravel-react-graphql.git)
 - [Bun](https://bun.sh/)
 
 ### Installation
